@@ -5,7 +5,12 @@
       <map>
         <entry key="..\:/syf/androido/sklep/app/src/main/res/layout/activity_main.xml" value="0.490036231884058" />
         <entry key="..\:/syf/androido/sklep/app/src/main/res/layout/activity_products_catalog.xml" value="0.490036231884058" />
+        <entry key="..\:/syf/androido/sklep/app/src/main/res/layout/activity_products_manager.xml" value="0.334375" />
+        <entry key="..\:/syf/androido/sklep/app/src/main/res/layout/activity_shop.xml" value="0.334375" />
+        <entry key="..\:/syf/androido/sklep/app/src/main/res/layout/products_catalogue_item.xml" value="0.334375" />
         <entry key="..\:/syf/androido/sklep/app/src/main/res/layout/products_item.xml" value="0.334375" />
+        <entry key="..\:/syf/androido/sklep/app/src/main/res/layout/products_manager_item.xml" value="0.334375" />
+        <entry key="..\:/syf/androido/sklep/app/src/main/res/menu/activity_menu.xml" value="0.334375" />
       </map>
     </option>
   </component>

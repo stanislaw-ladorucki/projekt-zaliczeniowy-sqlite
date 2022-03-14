@@ -7,6 +7,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MyDatabase {
 
+    private static DatabaseHelper helper;
+    public static DatabaseHelper getHelper(Context context) {
+        if (helper != null)
+            return helper;
+        else
+            helper = new DatabaseHelper(context);
+        return helper;
+    }
+
     public static class DatabaseHelper extends SQLiteOpenHelper {
 
         public static final int DATABASE_VERSION = 1;

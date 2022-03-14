@@ -1,0 +1,132 @@
+package com.example.sklep;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+public class ProductsManagerActivity extends BaseActivity {
+
+    public SQLiteDatabase shopDatabase;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_products_manager);
+
+        MyDatabase.DatabaseHelper hp = new MyDatabase.DatabaseHelper(this);
+        shopDatabase = hp.getWritableDatabase();
+
+        updateProductsListView();
+    }
+
+    public void createProduct(View view) {
+        EditText productNameInput  = findViewById(R.id.product_name_input);
+        EditText productPriceInput = findViewById(R.id.product_price_input);
+
+        String productName = productNameInput.getText().toString();
+        double productPrice;
+        try {
+            productPrice = Double.parseDouble(productPriceInput.getText().toString());
+        } catch (NumberFormatException e){
+            productPrice = 0.0;
+        }
+
+        if (productName.length() > 0) {
+            ContentValues product = new ContentValues();
+            product.put("name", productName);
+            product.put("price", productPrice);
+            shopDatabase.insert("products", null, product);
+
+            this.updateProductsListView();
+        }
+    }
+
+    public void updateProductsListView() {
+        Cursor query = shopDatabase.query("products", new String[]{"id", "name", "price"}, null, null, null, null, null);
+        Product[] products = new Product[query.getCount()];
+        int index = 0;
+        while (query.moveToNext()) {
+            int id = query.getInt(query.getColumnIndexOrThrow("id"));
+            String name = query.getString(query.getColumnIndexOrThrow("name"));
+            double price = query.getDouble(query.getColumnIndexOrThrow("price"));
+
+            products[index] = new Product(id, name, price);
+            index++;
+        }
+
+        query.close();
+
+        ProductsAdapter productsAdapter =
+                new ProductsAdapter(this, products);
+
+        ListView listView = findViewById(R.id.products_list_view);
+        listView.setAdapter(productsAdapter);
+    }
+
+    public void resetProducts(View view) {
+        shopDatabase.delete("products", null, null);
+        updateProductsListView();
+    }
+
+    public class ProductsAdapter extends ArrayAdapter<Product> {
+
+
+        private static final int PRODUCT_ID = 699;
+
+        public ProductsAdapter(@NonNull Context context, @NonNull Product[] items) {
+            super(context, R.layout.products_manager_item, items);
+
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View listItem = convertView;
+            if(listItem == null)
+                listItem = LayoutInflater.from(getContext()).inflate(R.layout.products_manager_item, parent,false);
+
+            Product product = getItem(position);
+            TextView productName = listItem.findViewById(R.id.product_name);
+            productName.setText(product.getName());
+
+            TextView productPrice = listItem.findViewById(R.id.product_price);
+            productPrice.setText(String.valueOf(product.getPrice()));
+
+            View root = listItem.getRootView();
+            root.setTag(product.getId());
+
+            View remove = listItem.findViewById(R.id.product_remove_button);
+
+            MyDatabase.DatabaseHelper helper = new MyDatabase.DatabaseHelper(this.getContext());
+            SQLiteDatabase database = helper.getWritableDatabase();
+
+            remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    View v = (View) view.getParent();
+                    int product_id = (int) v.getTag();
+
+                    database.delete("products", "id = " + product_id, null);
+
+                    Log.d("STACHU", String.valueOf(product_id));
+
+                    updateProductsListView();
+                }
+            });
+            return listItem;
+        }
+    }
+}

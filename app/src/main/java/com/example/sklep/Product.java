@@ -11,12 +11,6 @@ import java.util.Arrays;
 public class Product {
 
     private static final String TABLE_NAME = "products";
-    private static final ArrayList<RecordField> FIELDS = new ArrayList<RecordField>(
-            Arrays.asList(
-                    new RecordField("id",      DatabaseRecord.RecordFieldType.Integer),
-                    new RecordField("name",    DatabaseRecord.RecordFieldType.Text),
-                    new RecordField("price",   DatabaseRecord.RecordFieldType.Real))
-    );
 
     private final int id;
     private final String name;
@@ -40,7 +34,6 @@ public class Product {
         return price;
     }
 
-
     public static Product[] fetchProducts(Context context) {
         MyDatabase.DatabaseHelper helper = new MyDatabase.DatabaseHelper(context);
         SQLiteDatabase database = helper.getWritableDatabase();
@@ -59,14 +52,4 @@ public class Product {
 
         return products;
     }
-
-//    @Override
-//    public String getTableName() {
-//        return "products";
-//    }
-//
-//    @Override
-//    public ArrayList<RecordField> getFields() {
-//        return null;
-//    }
 }
