@@ -1,4 +1,4 @@
-package com.example.sklep;
+package com.example.sklep.activities;
 
 import android.content.Intent;
 import android.view.Menu;
@@ -7,6 +7,8 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sklep.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
     @Override
@@ -26,6 +28,22 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_activity_shop:
                 intent = new Intent(this, ShopActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_activity_cart:
+                intent = new Intent(this, MyCartActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_activity_orders:
+                intent = new Intent(this, ViewOrdersActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_activity_about_me:
+                intent = new Intent(this, AboutMeActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_user_data_activity:
+                intent = new Intent(this, UserDataActivity.class);
                 startActivity(intent);
                 return true;
         }

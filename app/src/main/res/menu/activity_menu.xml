@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="(Admin) Manage products"
+        android:title="(Admin) Manage productRecords"
         android:id="@+id/menu_activity_manage_products"
+        />
+    <item
+        android:title="(Admin) View orders"
+        android:id="@+id/menu_activity_orders"
         />
     <item
         android:title="Shop"
         android:id="@+id/menu_activity_shop"
+        />
+    <item
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
+        android:title="My Cart"
+        android:id="@+id/menu_activity_cart"
+        />
+    <item
+        android:title="About the author"
+        android:id="@+id/menu_activity_about_me"
+        />
+    <item
+        android:title="Edit my personal information"
+        android:id="@+id/menu_user_data_activity"
         />
 </menu>

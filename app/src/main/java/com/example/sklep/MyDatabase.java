@@ -4,45 +4,41 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.sklep.records.ProductRecord;
+import com.example.sklep.records.ShopOrderProductRecord;
+import com.example.sklep.records.ShopOrderRecord;
+
 
 public class MyDatabase {
-
-    private static DatabaseHelper helper;
-    public static DatabaseHelper getHelper(Context context) {
-        if (helper != null)
-            return helper;
-        else
-            helper = new DatabaseHelper(context);
-        return helper;
-    }
-
     public static class DatabaseHelper extends SQLiteOpenHelper {
 
-        public static final int DATABASE_VERSION = 1;
+        public static final int DATABASE_VERSION = 6;
         public static final String DATABASE_NAME = "sklep.db";
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
-        private static final String CREATE_PRODUCTS_TABLE =
-            "CREATE TABLE products (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                    "name TEXT NOT NULL," +
-                    "price REAL" +
-                    ")";
-
-        private static final String DELETE_PRODUCTS_TABLE =
-                "DROP TABLE IF EXISTS products";
-
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(CREATE_PRODUCTS_TABLE);
+
+            db.execSQL(ProductRecord.SQL_CREATE_TABLE);
+            db.execSQL(ShopOrderRecord.SQL_CREATE_TABLE);
+            db.execSQL(ShopOrderProductRecord.SQL_CREATE_TABLE);
+
+            ProductRecord.insertDemoRecords(db);
+
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-            db.execSQL(DELETE_PRODUCTS_TABLE);
-            db.execSQL(CREATE_PRODUCTS_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + ProductRecord.TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + ShopOrderRecord.TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + ShopOrderProductRecord.TABLE_NAME);
+            db.execSQL(ProductRecord.SQL_CREATE_TABLE);
+            db.execSQL(ShopOrderRecord.SQL_CREATE_TABLE);
+            db.execSQL(ShopOrderProductRecord.SQL_CREATE_TABLE);
+
+            ProductRecord.insertDemoRecords(db);
         }
     }
 

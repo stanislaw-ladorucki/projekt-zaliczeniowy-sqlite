@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductsManagerActivity"
+    tools:context=".activities.ProductsManagerActivity"
     android:padding="20sp"
     android:orientation="vertical">
 
@@ -25,13 +25,13 @@
         android:id="@+id/product_create_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SPRAWDZAM"
+        android:text="CREATE PRODUCt"
         android:onClick="createProduct"/>
     <Button
         android:id="@+id/products_reset_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WYCZYŚĆ"
+        android:text="DELETE ALL"
         android:onClick="resetProducts"/>
 
     <ListView

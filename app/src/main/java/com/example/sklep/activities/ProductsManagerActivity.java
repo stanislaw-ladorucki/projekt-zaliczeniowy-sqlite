@@ -1,8 +1,7 @@
-package com.example.sklep;
+package com.example.sklep.activities;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +15,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.sklep.MyDatabase;
+import com.example.sklep.R;
+import com.example.sklep.records.ProductRecord;
 
 public class ProductsManagerActivity extends BaseActivity {
 
@@ -55,22 +58,10 @@ public class ProductsManagerActivity extends BaseActivity {
     }
 
     public void updateProductsListView() {
-        Cursor query = shopDatabase.query("products", new String[]{"id", "name", "price"}, null, null, null, null, null);
-        Product[] products = new Product[query.getCount()];
-        int index = 0;
-        while (query.moveToNext()) {
-            int id = query.getInt(query.getColumnIndexOrThrow("id"));
-            String name = query.getString(query.getColumnIndexOrThrow("name"));
-            double price = query.getDouble(query.getColumnIndexOrThrow("price"));
-
-            products[index] = new Product(id, name, price);
-            index++;
-        }
-
-        query.close();
+        ProductRecord[] productRecords = ProductRecord.fetchProducts(this, null);
 
         ProductsAdapter productsAdapter =
-                new ProductsAdapter(this, products);
+                new ProductsAdapter(this, productRecords);
 
         ListView listView = findViewById(R.id.products_list_view);
         listView.setAdapter(productsAdapter);
@@ -81,12 +72,9 @@ public class ProductsManagerActivity extends BaseActivity {
         updateProductsListView();
     }
 
-    public class ProductsAdapter extends ArrayAdapter<Product> {
+    public class ProductsAdapter extends ArrayAdapter<ProductRecord> {
 
-
-        private static final int PRODUCT_ID = 699;
-
-        public ProductsAdapter(@NonNull Context context, @NonNull Product[] items) {
+        public ProductsAdapter(@NonNull Context context, @NonNull ProductRecord[] items) {
             super(context, R.layout.products_manager_item, items);
 
         }
@@ -98,15 +86,15 @@ public class ProductsManagerActivity extends BaseActivity {
             if(listItem == null)
                 listItem = LayoutInflater.from(getContext()).inflate(R.layout.products_manager_item, parent,false);
 
-            Product product = getItem(position);
+            ProductRecord productRecord = getItem(position);
             TextView productName = listItem.findViewById(R.id.product_name);
-            productName.setText(product.getName());
+            productName.setText(productRecord.getName());
 
             TextView productPrice = listItem.findViewById(R.id.product_price);
-            productPrice.setText(String.valueOf(product.getPrice()));
+            productPrice.setText(String.valueOf(productRecord.getPrice()));
 
             View root = listItem.getRootView();
-            root.setTag(product.getId());
+            root.setTag(productRecord.getId());
 
             View remove = listItem.findViewById(R.id.product_remove_button);
 
@@ -120,8 +108,6 @@ public class ProductsManagerActivity extends BaseActivity {
                     int product_id = (int) v.getTag();
 
                     database.delete("products", "id = " + product_id, null);
-
-                    Log.d("STACHU", String.valueOf(product_id));
 
                     updateProductsListView();
                 }

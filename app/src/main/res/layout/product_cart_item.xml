@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20sp"
+    android:id="@+id/product_layout_root">
+
+    <TextView
+        android:id="@+id/product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PRODUCT NAME"/>
+
+    <TextView
+        android:id="@+id/product_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PRODUCT QUANTITY"
+        android:layout_below="@+id/product_name"/>
+
+    <Button
+        android:id="@+id/product_amount_plus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:backgroundTint="@color/purple_200"
+        android:text="&#x2b;"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textColor="@color/black"
+        app:tint="@color/black" />
+    <Button
+        android:id="@+id/product_amount_minus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/product_amount_plus_button"
+        android:layout_centerVertical="true"
+        android:backgroundTint="@color/purple_200"
+        android:text="&#x2212;"
+        android:layout_marginRight="12sp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textColor="@color/black"
+        app:tint="@color/black" />
+
+
+
+</RelativeLayout>

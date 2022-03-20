@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".activities.ShopActivity">
+    tools:context=".activities.MyCartActivity">
 
     <TextView
         android:id="@+id/order_total_price"
@@ -15,7 +15,7 @@
 
     <ListView
         android:layout_below="@id/order_total_price"
-        android:id="@+id/products_list_view"
+        android:id="@+id/cart_products_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="GO TO CART"
-        android:onClick="goToCart"
+        android:text="Confirm Order"
+        android:onClick="confirmOrder"
         />
 
 </RelativeLayout>
